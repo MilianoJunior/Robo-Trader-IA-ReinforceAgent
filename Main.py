@@ -231,3 +231,33 @@ for i in range(len(dados1)):
     print('recompensa: ',time_step.reward.numpy(),' action: ',action2.action.numpy()[0])
 
 print(sum(neg.ganhofinal))
+
+
+import plotly.graph_objects as go
+
+
+fig = go.Figure(data=[go.Candlestick(x=dados1.Hora[0:len(dados1)-1],
+                open=dados1.open[0:len(dados1)-1], high=dados1.high[0:len(dados1)-1],
+                low=dados1.low[0:len(dados1)-1], close=dados1.close[0:len(dados1)-1])
+                      ])
+
+op = []
+for j in range(len(neg)-1):
+    if neg.tipo.values[j] == 'compra':
+        op.append(dict(x0=neg.inicio.values[j], x1=neg.fim.values[j], y0=0, y1=1, xref='x', yref='paper',line_width=2,name='compra'))
+    if neg.tipo.values[j] == 'venda':
+        op.append(dict(x0=neg.inicio.values[j], x1=neg.fim.values[j], y0=0, y1=0.5, xref='x', yref='paper',line_width=4,name='venda'))
+    
+
+
+fig.update_layout(
+    title='Ambiente controlado',
+    yaxis_title='WIN',
+    shapes = op,
+    annotations=[dict(
+        x='2016-12-09', y=0.05, xref='x', yref='paper',
+        showarrow=False, xanchor='left', text='Increase Period Begins')]
+)
+
+
+fig.write_html("teste.html")
