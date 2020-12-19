@@ -51,16 +51,16 @@ except:
 
 #Hiperparametros
 
-num_day = 565
-num_iterations = 2500 # @param {type:"integer"}
+num_day = 5000
+num_iterations = 15000 # @param {type:"integer"}
 collect_episodes_per_iteration = 2 # @param {type:"integer"}
-replay_buffer_capacity = 20000 # @param {type:"integer"}
+replay_buffer_capacity = 100000 # @param {type:"integer"}
 
 fc_layer_params = (100,)
 
 learning_rate = 1e-3 # @param {type:"number"}
 log_interval = 25 # @param {type:"integer"}
-num_eval_episodes = 10 # @param {type:"integer"}
+num_eval_episodes = 1 # @param {type:"integer"}
 eval_interval = 50 # @param {type:"integer"}
 
 train_py_env = CardGameEnv(base,num_day)
@@ -177,7 +177,8 @@ plt.xlabel('Step')
 plt.ylim(top=250)
 
 
-my_policy = eval_policy
+# my_policy = eval_policy
+my_policy = collect_policy
 saver = policy_saver.PolicySaver(my_policy, batch_size=None)
 saver.save('policy')
 
